@@ -1,9 +1,11 @@
+import {User} from './user.model';
+
 export class AbsenceModel {
   public id: number;
   public approved = false;
 
   constructor(
-    public employeeName: string, // todo max. 100
+    public employee: User,
     public dateStart: number,
     public dateEnd: number,
     public reason: Reason,

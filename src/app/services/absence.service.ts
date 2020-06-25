@@ -10,18 +10,19 @@ import {of} from 'rxjs';
 export class AbsenceService {
 
   constructor() {
-    // initiating static data (setting id-s)
-    absenceList.forEach( absenceData => {
-      if (absenceData.employeeName === loggedInUser.name){
-        absenceData.id = loggedInUser.id;
-      } else {
-        absenceData.id = Math.floor(Math.random() * 100000);
-      }
+    // backend emulation - initiating static data (setting unique id-s)
+    let id = 1;
+    absenceList.forEach(absenceData => {
+      absenceData.id = id++;
     });
+  }
+
+  getUser() {
+    return loggedInUser;
   }
 
   getAbsencesForUser(id: number): Observable<AbsenceModel[]> {
     // todo id filter
-    return of(absenceList);
+    return of(absenceList.filter(absence => absence.employee.id === id));
   }
 }

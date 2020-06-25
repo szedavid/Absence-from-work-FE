@@ -1,3 +1,12 @@
-.full-width-table {
-  width: 100%;
+@import "src/styles";
+@include mat-core();
+
+.absence-table-smaller-table {
+  width: 80%;
+}
+
+.absence-table-bigger-tooltip {
+  font-size: small;
+  background: mat-color($primary);
+  opacity: 0.9;
 }

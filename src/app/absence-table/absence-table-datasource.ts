@@ -73,8 +73,8 @@ export class AbsenceTableDataSource extends DataSource<AbsenceModel> {
     return data.sort((a, b) => {
       const isAsc = this.sort.direction === 'asc';
       switch (this.sort.active) {
-        case 'employeeName': return compare(a.employeeName, b.employeeName, isAsc);
-        case 'id': return compare(+a.id, +b.id, isAsc);
+        case 'dateStart': return compare(+a.dateStart, +b.dateStart, isAsc);
+        case 'dateEnd': return compare(+a.dateStart, +b.dateStart, isAsc);
         default: return 0;
       }
     });

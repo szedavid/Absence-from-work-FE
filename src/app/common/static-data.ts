@@ -6,75 +6,85 @@ import {User} from './user.model';
 export const loggedInUser = new User(1, 'David Diligent');
 
 export const absenceList: AbsenceModel[] = [
-
   new AbsenceModel(
-    'David Diligent',
-    Date.now() - 1000000,
-    Date.now() - 5000,
-    Reason['Non paid leave']
+    loggedInUser,
+    Date.now() - 10000000,
+    Date.now() - 500000,
+    Reason['Non paid leave'],
+    'Developing a board game.'
   ),
 
   new AbsenceModel(
-    'David Diligent',
-    Date.now() - 1000000,
+    loggedInUser,
+    Date.now() - 10000000000,
+    Date.now() - 1000000000,
+    Reason['Non paid leave'],
+    'Figuring out how to write really long comments like this to test some functions in my Angular application.'
+  ),
+
+  new AbsenceModel(
+    loggedInUser,
+    Date.now() - 10000000,
     Date.now(),
     Reason.Holiday
   ),
 
   new AbsenceModel(
-    'David Diligent',
-    Date.now() - 2000000,
+    loggedInUser,
+    Date.now() - 20000000,
     Date.now(),
-    Reason['Non paid leave']
+    Reason['Non paid leave'],
+    'Rescuing animals in Australia.'
   ),
 
   new AbsenceModel(
-    'David Diligent',
-    Date.now() - 3000000,
+    loggedInUser,
+    Date.now() - 30000000,
     Date.now(),
-    Reason['Business Travel']
+    Reason['Business Travel'],
+    'Meeting with Elon at Gigafactory 1 in Nevada.'
   ),
 
 // others
 
   new AbsenceModel(
-    'Dr. Jekyll',
-    Date.now() - 100000,
-    Date.now(),
+    loggedInUser,
+    Date.now() - 10000000,
+    Date.now() - 5000000,
     Reason['Non paid leave']
   ),
 
   new AbsenceModel(
-    'Thomas A. Anderson',
-    Date.now() - 100000,
+    new User(101, 'Thomas A. Anderson'),
+    Date.now() - 1000000,
     Date.now(),
     Reason.Holiday
     ),
 
   new AbsenceModel(
-    'Captain Ahab',
-    Date.now() - 100000,
+    new User(102, 'Captain Ahab'),
+    Date.now() - 10000000,
     Date.now(),
     Reason['Business Travel']
   ),
 
   new AbsenceModel(
-    'Mr. Hyde',
-    Date.now() - 100000,
+    new User(103, 'Mr. Hyde'),
+    Date.now() - 10000000,
     Date.now(),
     Reason['Non paid leave']
   ),
 
   new AbsenceModel(
-    'John Doe',
-    Date.now() - 100000,
+    new User(104, 'John Doe'),
+    Date.now() - 10000000,
     Date.now(),
     Reason['Business Travel']
   ),
 
   new AbsenceModel(
-    'Agent Smith',
-    Date.now() - 100000,
+    new User(105, 'Agent Smith'),
+    Date.now() - 10000000,
     Date.now(),
     Reason.Holiday
   )
