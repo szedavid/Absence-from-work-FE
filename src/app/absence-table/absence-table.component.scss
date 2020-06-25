@@ -1,12 +1,20 @@
 @import "src/styles";
 @include mat-core();
 
-.absence-table-smaller-table {
-  width: 80%;
+.absence-table-full-width {
+  width: 100%;
 }
 
 .absence-table-bigger-tooltip {
   font-size: small;
   background: mat-color($primary);
   opacity: 0.9;
+}
+
+.absence-table-row-approved {
+  background: lightgray;
+}
+
+.absence-table-button-container {
+  padding: 15px;
 }

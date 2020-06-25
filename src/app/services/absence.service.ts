@@ -14,6 +14,9 @@ export class AbsenceService {
     let id = 1;
     absenceList.forEach(absenceData => {
       absenceData.id = id++;
+      if (absenceData.id % 2 === 0){
+        absenceData.approved = true;
+      }
     });
   }
 

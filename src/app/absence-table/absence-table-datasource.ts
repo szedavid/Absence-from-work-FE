@@ -75,6 +75,8 @@ export class AbsenceTableDataSource extends DataSource<AbsenceModel> {
       switch (this.sort.active) {
         case 'dateStart': return compare(+a.dateStart, +b.dateStart, isAsc);
         case 'dateEnd': return compare(+a.dateStart, +b.dateStart, isAsc);
+        case 'reason': return compare(+a.reason, +b.reason, isAsc);
+        case 'approved': return compare(+a.approved, +b.approved, isAsc);
         default: return 0;
       }
     });
