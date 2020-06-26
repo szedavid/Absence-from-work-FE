@@ -1,37 +1,67 @@
 <div class="main">
   <h3 *ngIf="loggedInUser">Creating new absence entry for {{loggedInUser.name}}</h3>
 
-<!--  todo-->
-  <mat-form-field appearance="fill">
-    <mat-label>Start date</mat-label>
-    <input matInput required [(ngModel)]=absence.dateStart>
-  </mat-form-field>
-  <br>
+  <!--  <form>-->
+  <!--    <div class="form-group">-->
+  <!--      <label>Start date</label>-->
+  <!--        <input type="number" class="form-control" [required]="true" [(ngModel)]=absence.dateStart>-->
+  <!--    </div>-->
 
-<!--  todo-->
-  <mat-form-field appearance="fill">
-    <mat-label>Ending date</mat-label>
-    <input matInput required [formControl]="dateEndFC" [(ngModel)]=absence.dateEnd>
-    <mat-error *ngIf="dateEndFC.invalid">{{getErrorMessage()}}</mat-error>
-  </mat-form-field>
-  <br>
-  <mat-form-field appearance="fill">
-    <mat-label>Reason</mat-label>
-    <mat-select required>
-<!--      todo-->
-<!--      <mat-option *ngFor="let key of keys" [value]="key" [label]="countries[key]"></mat-option>-->
-    </mat-select>
-  </mat-form-field>
-  <br>
-  <mat-form-field appearance="fill">
-    <mat-label>Comment</mat-label>
-    <textarea matInput maxlength="500" [(ngModel)]=absence.comment></textarea>
-  </mat-form-field>
+  <!--    <div class="form-group">-->
+  <!--      <label>Ending date</label>-->
+  <!--      <input type="number" class="form-control" [required]="true" [(ngModel)]=absence.dateEnd>-->
+  <!--    </div>-->
 
-    <button mat-raised-button color="primary" type="submit">Create</button>
-    <button mat-raised-button color="warn" (click)="onClose()">Cancel</button>
+  <!--    <div class="form-group">-->
+  <!--      <label>Reason</label>-->
+  <!--        <select required [(ngModel)]=absence.reason>-->
+  <!--          <option *ngFor="let key of reasons" [value]="key">{{reasons[key]}}</option>-->
+  <!--        </select>-->
+  <!--    </div>-->
 
+  <!--  </form>-->
 
+  <form *ngIf="form" [formGroup]="form" (submit)="onSubmit()">
+    <div class="sub-container">
+      <mat-form-field appearance="fill">
+        <mat-label>Choose start date</mat-label>
+        <input matInput [matDatepicker]="pickerStart" formControlName="dateStart">
+        <mat-error *ngIf="form.controls['dateStart'].errors?.required">This field is mandatory!</mat-error>
+        <mat-datepicker-toggle matSuffix [for]="pickerStart"></mat-datepicker-toggle>
+        <mat-datepicker #pickerStart></mat-datepicker>
+      </mat-form-field>
+      <br>
+      <mat-form-field appearance="fill">
+        <mat-label>Choose ending date</mat-label>
+        <input matInput [matDatepicker]="pickerEnd" formControlName="dateEnd">
+        <mat-error *ngIf="form.controls['dateEnd'].errors?.required || !isEndDateValid()">
+          This field is mandatory and must not be before start date!</mat-error>
+        <mat-datepicker-toggle matSuffix [for]="pickerEnd"></mat-datepicker-toggle>
+        <mat-datepicker #pickerEnd></mat-datepicker>
+      </mat-form-field>
+    </div>
 
+    <div class="sub-container">
+      <mat-form-field appearance="fill">
+        <mat-label>Reason</mat-label>
+        <mat-select formControlName="reason">
+          <!--      todo-->
+          <mat-option *ngFor="let key of reasons" [value]="key">{{key}}</mat-option>
+        </mat-select>
+        <mat-error *ngIf="form.controls['dateStart'].errors?.required">This field is mandatory!</mat-error>
+      </mat-form-field>
+      <br>
+      <mat-form-field appearance="fill">
+        <mat-label>Comment</mat-label>
+        <textarea matInput maxlength="500" formControlName="comment">></textarea>
+      </mat-form-field>
+    </div>
+
+    <div class="sub-container">
+      <span *ngIf="!isEndDateValid()">Ending date must not be before start date!</span>
+      <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid || !isEndDateValid()">Create</button>
+      <button mat-raised-button color="warn" (click)="onClose()">Cancel</button>
+    </div>
+  </form>
 
 </div>

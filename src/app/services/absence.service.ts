@@ -57,4 +57,22 @@ export class AbsenceService {
       absences.splice(index, 1);
     }
   }
+
+  addOrUpdateAbsence(absence: AbsenceModel) {
+    console.log('addOrUpdateAbsence: ');
+    console.log(absence);
+    if (!absence.id){
+      console.log('create');
+      absence.id = Math.floor(Math.random() * 100000) + 1000;
+      absences.push(absence);
+    } else {
+      console.log('update');
+      const index = absences.indexOf(absence);
+      if (index > -1) {
+        absences.splice(index, 1);
+      } else {
+        console.error('Update failed - absence not found: ' + absence);
+      }
+    }
+  }
 }

@@ -6,8 +6,8 @@ export class AbsenceModel {
 
   constructor(
     public employee: User,
-    public dateStart?: number,
-    public dateEnd?: number,
+    public dateStart?: Date,
+    public dateEnd?: Date,
     public reason?: Reason,
     public comment?: string, // todo max. 500
     ) {}
