@@ -16,5 +16,18 @@
 }
 
 .absence-table-button-container {
+  display: flex;
   padding: 15px;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.absence-table-selector-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.mat-form-field {
+  padding: 0 15px;
 }

@@ -3,19 +3,23 @@
   <div class="absence-table-button-container">
     <button mat-raised-button color="primary" (click)="onCreateOrUpdate(null)">Create</button>
 
+    <div class="absence-table-selector-container">
+      <h2>Filter</h2>
+
     <mat-form-field appearance="fill">
       <mat-label>Year</mat-label>
-      <mat-select [(ngModel)]="selectedYear">
-        <option *ngFor="let year of years" [value]="year">{{year}}</option>
+      <mat-select [(ngModel)]="selectedYear" (valueChange)="onChangeYear($event)">
+        <mat-option *ngFor="let year of years" [value]="year">{{year}}</mat-option>
       </mat-select>
     </mat-form-field>
 
     <mat-form-field appearance="fill">
       <mat-label>Month</mat-label>
-      <mat-select [(ngModel)]="selectedMonth">
+      <mat-select [(ngModel)]="selectedMonth" (valueChange)="onChangeMonth($event)">
         <mat-option *ngFor="let month of months" [value]="month">{{month}}</mat-option>
       </mat-select>
     </mat-form-field>
+    </div>
   </div>
 
   <hr>

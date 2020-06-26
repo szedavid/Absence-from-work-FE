@@ -5,7 +5,7 @@ import {User} from './user.model';
 
 export const loggedInUser = new User(1, 'David Diligent');
 
-export const absenceList: AbsenceModel[] = [
+export let absences: AbsenceModel[] = [
   new AbsenceModel(
     loggedInUser,
     Date.now() - 10000000,

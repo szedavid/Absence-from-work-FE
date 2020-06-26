@@ -16,9 +16,9 @@ export class AbsenceTableDataSource extends DataSource<AbsenceModel> {
   paginator: MatPaginator;
   sort: MatSort;
 
-  constructor(private absenceService: AbsenceService) {
+  constructor(private absenceService: AbsenceService, selectedYear: number, selectedMonth: number) {
     super();
-    this.loadData(null, null);
+    this.loadData(selectedYear, selectedMonth);
   }
 
   public loadData(year: number, month: number){

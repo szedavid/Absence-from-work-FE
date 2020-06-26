@@ -37,19 +37,17 @@ export class AbsenceTableComponent implements AfterViewInit, OnInit {
   }
 
   ngOnInit() {
-    this.years.push(null);
     for (let i = 2000; i <= 2050; i++) {
       this.years.push(i);
     }
     this.selectedYear = new Date().getFullYear();
 
-    this.months.push(null);
     for (let i = 1; i <= 12; i++) {
       this.months.push(i);
     }
     this.selectedMonth = new Date().getMonth() + 1; // starts from 0
 
-    this.dataSource = new AbsenceTableDataSource(this.absenceService);
+    this.dataSource = new AbsenceTableDataSource(this.absenceService, this.selectedYear, this.selectedMonth - 1);
   }
 
   ngAfterViewInit() {
@@ -71,7 +69,21 @@ export class AbsenceTableComponent implements AfterViewInit, OnInit {
     this.dialog.open(AbsenceDialogComponent, dialogConfig);
   }
 
-  onDelete(row: any) {
-    // todo
+  onDelete(absence: AbsenceModel) {
+    if (confirm('Are you sure, you want to delete this record?')) {
+      this.absenceService.deleteAbsence(absence);
+      this.dataSource.loadData(this.selectedYear, this.selectedMonth - 1);
+      // todo refresh
+    }
+  }
+
+  onChangeYear(year) {
+    this.dataSource.loadData(year, this.selectedMonth - 1);
+    // todo refresh
+  }
+
+  onChangeMonth(month) {
+    this.dataSource.loadData(this.selectedYear, month - 1);
+    // todo refresh
   }
 }
