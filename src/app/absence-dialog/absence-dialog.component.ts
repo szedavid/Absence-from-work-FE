@@ -16,26 +16,8 @@ export class AbsenceDialogComponent implements OnInit {
   public absence: AbsenceModel;
 
   reasons: any;
-  // reasons = [Reason.Holiday, Reason['Paid leave'], Reason['Non paid leave'], Reason['Business Travel'], Reason['Home office']];
-  // dateStartFC: FormControl;
-  // dateEndFC: FormControl;
 
   form: FormGroup;
-
-  // dateEndValidator(): ValidatorFn {
-  //   return (control: AbstractControl): { [key: string]: any } | null => {
-  //
-  //     const dStart = this.form.get('dateStart').value;
-  //     const dEnd = this.form.get('dateStart').value;
-  //
-  //     console.log(dStart);
-  //     console.log(dEnd);
-  //
-  //     const forbidden = dStart < dEnd;
-  //     return forbidden ? {'forbiddenValue': {value: control.value}} : null;
-  //   };
-  // }
-
 
   constructor(
     public dialogRef: MatDialogRef<AbsenceDialogComponent>,
@@ -52,10 +34,14 @@ export class AbsenceDialogComponent implements OnInit {
       this.absence = new AbsenceModel(this.loggedInUser);
     }
 
-    this.reasons = Object.keys(Reason).filter(k => typeof Reason[k as any] === 'number');
-    console.log(this.reasons);
+    this.reasons = Reason;
 
     this.inintForm();
+  }
+
+  getReasons(): Array<string> {
+    const keys = Object.keys(this.reasons);
+    return keys.slice(keys.length / 2);
   }
 
   onSubmit() {

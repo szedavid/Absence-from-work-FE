@@ -1,4 +1,4 @@
-<div class="main">
+<div class="main-container">
   <h3 *ngIf="loggedInUser">Creating new absence entry for {{loggedInUser.name}}</h3>
 
   <!--  <form>-->
@@ -22,6 +22,7 @@
   <!--  </form>-->
 
   <form *ngIf="form" [formGroup]="form" (submit)="onSubmit()">
+    <div class="custom-msg" *ngIf="!isEndDateValid()">Ending date must not be before start date!</div>
     <div class="sub-container">
       <mat-form-field appearance="fill">
         <mat-label>Choose start date</mat-label>
@@ -35,31 +36,31 @@
         <mat-label>Choose ending date</mat-label>
         <input matInput [matDatepicker]="pickerEnd" formControlName="dateEnd">
         <mat-error *ngIf="form.controls['dateEnd'].errors?.required || !isEndDateValid()">
-          This field is mandatory and must not be before start date!</mat-error>
+          This field is mandatory and must not be before start date!
+        </mat-error>
         <mat-datepicker-toggle matSuffix [for]="pickerEnd"></mat-datepicker-toggle>
         <mat-datepicker #pickerEnd></mat-datepicker>
       </mat-form-field>
-    </div>
 
-    <div class="sub-container">
       <mat-form-field appearance="fill">
         <mat-label>Reason</mat-label>
         <mat-select formControlName="reason">
-          <!--      todo-->
-          <mat-option *ngFor="let key of reasons" [value]="key">{{key}}</mat-option>
+          <mat-option *ngFor="let key of getReasons()" [value]="reasons[key]">{{key}}</mat-option>
         </mat-select>
         <mat-error *ngIf="form.controls['dateStart'].errors?.required">This field is mandatory!</mat-error>
       </mat-form-field>
-      <br>
+    </div>
+
+    <div class="sub-container-col">
       <mat-form-field appearance="fill">
         <mat-label>Comment</mat-label>
-        <textarea matInput maxlength="500" formControlName="comment">></textarea>
+        <textarea matInput maxlength="500" formControlName="comment"></textarea>
       </mat-form-field>
     </div>
 
     <div class="sub-container">
-      <span *ngIf="!isEndDateValid()">Ending date must not be before start date!</span>
-      <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid || !isEndDateValid()">Create</button>
+      <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid || !isEndDateValid()">Create
+      </button>
       <button mat-raised-button color="warn" (click)="onClose()">Cancel</button>
     </div>
   </form>

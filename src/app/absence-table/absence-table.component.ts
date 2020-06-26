@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
+import {AfterViewInit, Component, OnDestroy, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
 import {MatTable} from '@angular/material/table';
@@ -7,6 +7,7 @@ import {AbsenceModel, Reason} from '../common/absence.model';
 import {AbsenceService} from '../services/absence.service';
 import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
 import {AbsenceDialogComponent} from '../absence-dialog/absence-dialog.component';
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-absence-table',
@@ -17,7 +18,7 @@ import {AbsenceDialogComponent} from '../absence-dialog/absence-dialog.component
   encapsulation: ViewEncapsulation.None
 })
 
-export class AbsenceTableComponent implements AfterViewInit, OnInit {
+export class AbsenceTableComponent implements AfterViewInit, OnInit, OnDestroy {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatTable) table: MatTable<AbsenceModel>;
@@ -26,6 +27,8 @@ export class AbsenceTableComponent implements AfterViewInit, OnInit {
   months: number[] = [];
   selectedYear: number;
   selectedMonth: number;
+
+  subscriptionUpdate: Subscription;
 
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
     // employeeName column is not necessary due to the emulated login handling, but it is required in the specification
@@ -54,6 +57,13 @@ export class AbsenceTableComponent implements AfterViewInit, OnInit {
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
     this.table.dataSource = this.dataSource;
+
+    this.subscriptionUpdate = this.absenceService.getMessageUpdate().subscribe(
+      () => {
+        this.dataSource.loadData(this.selectedYear, this.selectedMonth - 1);
+        this.paginator.page.emit();
+      }
+    );
   }
 
   getReasonText(reasonId: number): string {
@@ -73,17 +83,22 @@ export class AbsenceTableComponent implements AfterViewInit, OnInit {
     if (confirm('Are you sure, you want to delete this record?')) {
       this.absenceService.deleteAbsence(absence);
       this.dataSource.loadData(this.selectedYear, this.selectedMonth - 1);
-      // todo refresh
     }
   }
 
-  onChangeYear(year) {
-    this.dataSource.loadData(year, this.selectedMonth - 1);
-    // todo refresh
+  onChangeYear(yearNew) {
+    this.dataSource.loadData(yearNew, this.selectedMonth - 1);
+    this.paginator.page.emit();
   }
 
-  onChangeMonth(month) {
-    this.dataSource.loadData(this.selectedYear, month - 1);
-    // todo refresh
+  onChangeMonth(monthNew) {
+    this.dataSource.loadData(this.selectedYear, monthNew - 1);
+    this.paginator.page.emit();
+  }
+
+  ngOnDestroy(): void {
+    if (this.subscriptionUpdate) {
+      this.subscriptionUpdate.unsubscribe();
+    }
   }
 }

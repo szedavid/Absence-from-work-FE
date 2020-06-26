@@ -9,7 +9,7 @@ export class AbsenceModel {
     public dateStart?: Date,
     public dateEnd?: Date,
     public reason?: Reason,
-    public comment?: string, // todo max. 500
+    public comment?: string
     ) {}
 }
 

@@ -1,13 +1,15 @@
 import {Injectable} from '@angular/core';
 import {AbsenceModel} from '../common/absence.model';
 import {absences, loggedInUser} from '../common/static-data';
-import {Observable} from 'rxjs';
+import {Observable, Subject} from 'rxjs';
 import {of} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AbsenceService {
+
+  subject = new Subject<any>();
 
   constructor() {
     // backend emulation - initiating static data (setting unique id-s)
@@ -18,6 +20,14 @@ export class AbsenceService {
         absenceData.approved = true;
       }
     });
+  }
+
+  private sendMessageUpdate(){
+    this.subject.next();
+  }
+
+  getMessageUpdate(): Observable<any> {
+    return this.subject.asObservable();
   }
 
   // emulating login, so every user can only access his/her own absence entries
@@ -55,6 +65,7 @@ export class AbsenceService {
     const index = absences.indexOf(absence);
     if (index > -1) {
       absences.splice(index, 1);
+      this.sendMessageUpdate();
     }
   }
 
@@ -74,5 +85,6 @@ export class AbsenceService {
         console.error('Update failed - absence not found: ' + absence);
       }
     }
+    this.sendMessageUpdate();
   }
 }

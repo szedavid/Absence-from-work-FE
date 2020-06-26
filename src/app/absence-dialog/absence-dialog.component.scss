@@ -9,6 +9,17 @@
   justify-content: center;
 }
 
+.sub-container-col {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
 button {
   margin: 0 15px;
+}
+
+.custom-msg {
+  color: red;
+  text-align: center;
 }

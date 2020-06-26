@@ -26,7 +26,6 @@ export class AbsenceTableDataSource extends DataSource<AbsenceModel> {
       (absences: AbsenceModel[]) => {
         this.data = absences;
       }
-      // todo error handling
     );
   }
 

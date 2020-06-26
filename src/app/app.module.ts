@@ -19,12 +19,14 @@ import {MatInputModule} from '@angular/material/input';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatNativeDateModule} from '@angular/material/core';
+import { WelcomeComponent } from './welcome/welcome.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     AbsenceTableComponent,
-    AbsenceDialogComponent
+    AbsenceDialogComponent,
+    WelcomeComponent
   ],
   imports: [
     BrowserModule,
