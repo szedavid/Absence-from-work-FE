@@ -1,12 +1,31 @@
 <div class="mat-elevation-z8">
 
   <div class="absence-table-button-container">
-    <button mat-raised-button color="primary" (click)="onCreate()">Create</button>
+    <button mat-raised-button color="primary" (click)="onCreateOrUpdate(null)">Create</button>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Year</mat-label>
+      <mat-select [(ngModel)]="selectedYear">
+        <option *ngFor="let year of years" [value]="year">{{year}}</option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Month</mat-label>
+      <mat-select [(ngModel)]="selectedMonth">
+        <mat-option *ngFor="let month of months" [value]="month">{{month}}</mat-option>
+      </mat-select>
+    </mat-form-field>
   </div>
 
   <hr>
 
   <table mat-table class="absence-table-full-width" matSort aria-label="Elements">
+    <!-- Name Column -->
+    <ng-container matColumnDef="employeeName">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
+      <td mat-cell *matCellDef="let row">{{row.employee.name.slice(0, 100)}}</td>
+    </ng-container>
 
     <!-- Start Date Column -->
     <ng-container matColumnDef="dateStart">
@@ -42,10 +61,10 @@
     <ng-container matColumnDef="action">
       <th mat-header-cell *matHeaderCellDef>Action</th>
       <td mat-cell *matCellDef="let row">
-        <button *ngIf="!row.approved" mat-icon-button>
+        <button *ngIf="!row.approved" mat-icon-button (click)="onCreateOrUpdate(row)">
           <mat-icon>edit</mat-icon>
         </button>
-        <button *ngIf="!row.approved" mat-icon-button color="warn">
+        <button *ngIf="!row.approved" mat-icon-button color="warn" (click)="onDelete(row)">
           <mat-icon>delete_outline</mat-icon>
         </button>
       </td>

@@ -20,12 +20,21 @@ export class AbsenceService {
     });
   }
 
+  // emulating login, so every user can only access his/her own absence entries
   getUser() {
     return loggedInUser;
   }
 
-  getAbsencesForUser(id: number): Observable<AbsenceModel[]> {
-    // todo id filter
-    return of(absenceList.filter(absence => absence.employee.id === id));
+  getAbsencesForCurrentUser(year: number, month: number): Observable<AbsenceModel[]> {
+    let retVal: AbsenceModel[];
+    retVal = absenceList.filter(absence => absence.employee.id === loggedInUser.id);
+    // if (year || month){
+    //   if (year){
+    //     retVal = retVal.filter(absence => absence.dateStart === loggedInUser.id);
+    //     // todo date end
+    //   }
+    //   // todo month
+    // }
+    return of(retVal);
   }
 }

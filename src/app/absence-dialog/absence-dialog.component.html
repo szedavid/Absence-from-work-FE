@@ -1,1 +1,37 @@
-<div>absence-dialog works!</div>
+<div class="main">
+  <h3 *ngIf="loggedInUser">Creating new absence entry for {{loggedInUser.name}}</h3>
+
+<!--  todo-->
+  <mat-form-field appearance="fill">
+    <mat-label>Start date</mat-label>
+    <input matInput required [(ngModel)]=absence.dateStart>
+  </mat-form-field>
+  <br>
+
+<!--  todo-->
+  <mat-form-field appearance="fill">
+    <mat-label>Ending date</mat-label>
+    <input matInput required [formControl]="dateEndFC" [(ngModel)]=absence.dateEnd>
+    <mat-error *ngIf="dateEndFC.invalid">{{getErrorMessage()}}</mat-error>
+  </mat-form-field>
+  <br>
+  <mat-form-field appearance="fill">
+    <mat-label>Reason</mat-label>
+    <mat-select required>
+<!--      todo-->
+<!--      <mat-option *ngFor="let key of keys" [value]="key" [label]="countries[key]"></mat-option>-->
+    </mat-select>
+  </mat-form-field>
+  <br>
+  <mat-form-field appearance="fill">
+    <mat-label>Comment</mat-label>
+    <textarea matInput maxlength="500" [(ngModel)]=absence.comment></textarea>
+  </mat-form-field>
+
+    <button mat-raised-button color="primary" type="submit">Create</button>
+    <button mat-raised-button color="warn" (click)="onClose()">Cancel</button>
+
+
+
+
+</div>

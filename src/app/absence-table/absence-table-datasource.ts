@@ -5,7 +5,6 @@ import { map } from 'rxjs/operators';
 import { Observable, of as observableOf, merge } from 'rxjs';
 import {AbsenceModel} from '../common/absence.model';
 import {AbsenceService} from '../services/absence.service';
-import {loggedInUser} from '../common/static-data';
 
 /**
  * Data source for the AbsenceTable view. This class should
@@ -19,7 +18,11 @@ export class AbsenceTableDataSource extends DataSource<AbsenceModel> {
 
   constructor(private absenceService: AbsenceService) {
     super();
-    absenceService.getAbsencesForUser(loggedInUser.id).subscribe(
+    this.loadData(null, null);
+  }
+
+  public loadData(year: number, month: number){
+    this.absenceService.getAbsencesForCurrentUser(year, month).subscribe(
       (absences: AbsenceModel[]) => {
         this.data = absences;
       }
@@ -73,6 +76,7 @@ export class AbsenceTableDataSource extends DataSource<AbsenceModel> {
     return data.sort((a, b) => {
       const isAsc = this.sort.direction === 'asc';
       switch (this.sort.active) {
+        case 'employeeName': return compare(a.employee.name, b.employee.name, isAsc);
         case 'dateStart': return compare(+a.dateStart, +b.dateStart, isAsc);
         case 'dateEnd': return compare(+a.dateStart, +b.dateStart, isAsc);
         case 'reason': return compare(+a.reason, +b.reason, isAsc);

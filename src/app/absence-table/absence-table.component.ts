@@ -22,9 +22,14 @@ export class AbsenceTableComponent implements AfterViewInit, OnInit {
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatTable) table: MatTable<AbsenceModel>;
   dataSource: AbsenceTableDataSource;
+  years: number[] = [];
+  months: number[] = [];
+  selectedYear: number;
+  selectedMonth: number;
 
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
-  displayedColumns = ['dateStart', 'dateEnd', 'reason', 'comment', 'approved', 'action'];
+    // employeeName column is not necessary due to the emulated login handling, but it is required in the specification
+  displayedColumns = ['employeeName', 'dateStart', 'dateEnd', 'reason', 'comment', 'approved', 'action'];
 
   constructor(
     private absenceService: AbsenceService,
@@ -32,6 +37,18 @@ export class AbsenceTableComponent implements AfterViewInit, OnInit {
   }
 
   ngOnInit() {
+    this.years.push(null);
+    for (let i = 2000; i <= 2050; i++) {
+      this.years.push(i);
+    }
+    this.selectedYear = new Date().getFullYear();
+
+    this.months.push(null);
+    for (let i = 1; i <= 12; i++) {
+      this.months.push(i);
+    }
+    this.selectedMonth = new Date().getMonth() + 1; // starts from 0
+
     this.dataSource = new AbsenceTableDataSource(this.absenceService);
   }
 
@@ -45,12 +62,16 @@ export class AbsenceTableComponent implements AfterViewInit, OnInit {
     return Reason[reasonId];
   }
 
-  onCreate() {
-    // this.absenceService.initializeFormGroup(); // TODO
+  onCreateOrUpdate(absence: AbsenceModel) {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
     dialogConfig.width = '60%';
+    dialogConfig.data = absence;
     this.dialog.open(AbsenceDialogComponent, dialogConfig);
+  }
+
+  onDelete(row: any) {
+    // todo
   }
 }
