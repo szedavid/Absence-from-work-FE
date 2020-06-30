@@ -1,5 +1,5 @@
 <div class="main-container">
-  <h3 *ngIf="loggedInUser">Creating new absence entry for {{loggedInUser.name}}</h3>
+  <h3 *ngIf="loggedInUser">{{absence?.id ? 'Updating' : 'Creating new'}} absence entry for {{loggedInUser.name}}</h3>
 
   <!--  <form>-->
   <!--    <div class="form-group">-->
@@ -59,7 +59,8 @@
     </div>
 
     <div class="sub-container">
-      <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid || !isEndDateValid()">Create
+      <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid || !isEndDateValid()">
+        {{absence?.id ? 'Update' : 'Create'}}
       </button>
       <button mat-raised-button color="warn" (click)="onClose()">Cancel</button>
     </div>

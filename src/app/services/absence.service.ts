@@ -80,7 +80,7 @@ export class AbsenceService {
       console.log('update');
       const index = absences.indexOf(absence);
       if (index > -1) {
-        absences.splice(index, 1);
+        absences.splice(index, 1, absence);
       } else {
         console.error('Update failed - absence not found: ' + absence);
       }
